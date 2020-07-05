@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Welcome to X-Chat!</h2>
+<div>
+  <mat-form-field>
+    <input matInput
+           name="nickname"
+           placeholder="Nickname"
+           (keyup.enter)="onSave()"
+           [formControl]="nicknameFormControl"
+           required>
+    <mat-error>Required</mat-error>
+    <mat-hint>Please type your nickname</mat-hint>
+  </mat-form-field>
+</div>
+<div align="end">
+  <button mat-flat-button
+          color="primary"
+          mat-dialog-close
+          (click)="onSave()"
+          [disabled]="nicknameFormControl.hasError('required')">
+    Chat
+  </button>
+</div>

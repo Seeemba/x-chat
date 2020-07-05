@@ -1,0 +1,52 @@
+<button mat-fab (click)="dNav.toggle()">
+  <mat-icon>group</mat-icon>
+</button>
+<mat-drawer-container>
+
+  <mat-drawer #dNav mode="side"
+              [opened]="!mobileQuery.matches"
+              position="end"
+              [mode]="mobileQuery.matches ? 'over' : 'side'"
+              [disableClose]="!mobileQuery.matches">
+    <mat-list>
+      <mat-list-item *ngFor="let user of users">
+        <span (dblclick)="addNickname(user.nickname)">{{user.nickname}}</span>
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="chat-container">
+      <mat-card class="main-card">
+        <mat-list class="chat-list" #chatList>
+          <mat-list-item *ngFor="let message of messages"
+                         [ngClass]="[(message.action === undefined && message.from.nickname === user.nickname)? 'chat-list-item': '']">
+            <div *ngIf="message.action === undefined">
+              <p class="chat-message" mat-line>
+                <span>({{message.timestamp | date:"hh:mm"}})</span> &nbsp;
+                <b (dblclick)="addNickname(message.from.nickname)">{{message.from.nickname}}: &nbsp;</b>
+                <span> {{message.content}} </span>
+              </p>
+            </div>
+
+            <p mat-line *ngIf="message.action === action.JOINED" class="chat-notification">
+              <span> <b>{{message.from.nickname}}</b> joined to our chat. </span>
+            </p>
+          </mat-list-item>
+        </mat-list>
+        <div class="chat-footer-container">
+          <mat-form-field class="chat-input">
+            <input matInput
+                   maxlength="140"
+                   placeholder="Type your message"
+                   [(ngModel)]="messageContent"
+                   (keyup.enter)="sendMessage(messageContent)">
+          </mat-form-field>
+
+          <button mat-icon-button (click)="sendMessage(messageContent)">
+            <mat-icon>send</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
