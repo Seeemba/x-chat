@@ -3,6 +3,8 @@
 This project is an implementation of the small chat application using Node.js, Express.js, Socket.io, Angular 9, and
 consist of Server and Client part.
 
+![](./screenshot-01.png)
+
 ## Server
 ## Installation
 ```bash
